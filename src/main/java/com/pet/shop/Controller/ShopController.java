@@ -4,6 +4,8 @@ import com.pet.shop.Model.Category;
 import com.pet.shop.Model.Product;
 import com.pet.shop.Service.ShopService;
 import lombok.AllArgsConstructor;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -12,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.LinkedList;
 import java.util.List;
-
+@Tag(name = "Shop Controller", description = "API для управления товарами и категориями")
 @RestController
 @RequestMapping("/api/v1/shop")
 @AllArgsConstructor
@@ -21,6 +23,8 @@ public class ShopController {
     private final Logger log = LoggerFactory.getLogger(ShopController.class);
     private ShopService shopService;
 
+
+    @Operation(summary = "Сохранить продукт", description = "Создаёт или обновляет продукт в магазине")
     @PostMapping("save")
     public ResponseEntity<Product> saveProduct(@RequestBody Product product) {
         log.info("Received request to save product: {}", product);
@@ -35,6 +39,8 @@ public class ShopController {
         }
     }
 
+
+    @Operation(summary = "Сохранить продукы", description = "Создаёт или обновляет список продуктов в магазине")
     @PostMapping("saveAll")
     public ResponseEntity<List<Product>> saveAllProduct(@RequestBody List<Product> products) {
         log.info("Received request to save a list of products: {}", products.size());
@@ -53,6 +59,8 @@ public class ShopController {
         }
     }
 
+
+    @Operation(summary = "Получить все продукты", description = "Возвращает список всех продуктов")
     @GetMapping("findAll")
     public ResponseEntity<List<Product>> getAllProducts() {
         log.info("Received request to get all products");
@@ -67,6 +75,8 @@ public class ShopController {
         }
     }
 
+
+    @Operation(summary = "Получить продукт", description = "Возвращает список найденных продуктов по query")
     @GetMapping("find")
     public ResponseEntity<List<Product>> getProducts(@RequestParam String query) {
         log.info("Received request to search for products with query: {}", query);
